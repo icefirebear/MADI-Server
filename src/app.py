@@ -4,7 +4,7 @@ from configparser import ConfigParser
 from middleware import DBSession
 
 config = ConfigParser()
-config.read("../config.ini")
+config.read("config.ini")
 
 app = FastAPI()
 
