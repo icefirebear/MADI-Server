@@ -6,12 +6,12 @@ router = APIRouter()
 
 
 # 기본정보로 로그인
-@router.post('/login')
+@router.post('/')
 def login_by_general() -> Any:
     return
 
 
 # access-token 으로 로그인
-@router.get('/login/access-token')
+@router.get('/access-token')
 def login_by_access_token() -> Any:
     return
