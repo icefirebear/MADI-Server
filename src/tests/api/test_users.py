@@ -75,6 +75,14 @@ def test_login_user(client: TestClient) -> None:
     assert token_regular.match(response.json()["token"])
 
 
+def test_login_user_by_access_token(
+    client: TestClient, token_headers: Dict[str, str]
+) -> None:
+    response = client.get(f"{BASE_URL}/user/access-token", headers=token_headers)
+
+    assert response.status_code == 200
+
+
 def test_modify_user(client: TestClient, token_headers: Dict[str, str]) -> None:
     data = {
         "name": "정현문",
