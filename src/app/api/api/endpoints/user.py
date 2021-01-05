@@ -20,7 +20,7 @@ def register_user() -> Any:
 
 
 # 중복 이메일 체크
-@router.post('/emailCheck')
+@router.post('/email-check')
 def check_user_email() -> Any:
     return
 
