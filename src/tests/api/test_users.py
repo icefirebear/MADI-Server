@@ -9,7 +9,7 @@ from sqlalchemy.orm import Session
 BASE_URL = "http://localhost:8000"
 
 MOCK_USERS = {
-    "correct_user": {
+    "new_user": {
         "email": "student1@example.com",
         "password": "1234",
         "name": "학생1",
@@ -35,11 +35,32 @@ def test_get_user_by_token(client: TestClient, token_headers: Dict[str, str]) ->
     assert response.json() == MOCK_USERS["exist_user"]
 
 
-def test_create_user(client: TestClient) -> None:
-    data = MOCK_USERS["correct_user"]
+def test_create_new_user(client: TestClient) -> None:
+    data = MOCK_USERS["new_user"]
     response = client.post(f"{BASE_URL}/user/register", json=data)
 
     assert 201 == response.status_code
+
+
+def test_create_existing_user(client: TestClient) -> None:
+    data = MOCK_USERS["exist_user"]
+    response = client.post(f"{BASE_URL}/user/register", json=data)
+
+    assert 400 == response.status_code
+
+
+def test_new_email_check(client: TestClient) -> None:
+    data = {"email": MOCK_USERS["new_user"]["email"]}
+    response = client.post(f"{BASE_URL}/user/email-check", json=data)
+
+    assert 200 == response.status_code
+
+
+def test_existing_email_check(client: TestClient) -> None:
+    data = {"email": MOCK_USERS["exist_user"]["email"]}
+    response = client.post(f"{BASE_URL}/user/email-check", json=data)
+
+    assert 400 == response.status_code
 
 
 def test_login_user(client: TestClient) -> None:
