@@ -15,8 +15,24 @@ MOCK_USERS = {
         "name": "학생1",
         "stdNo": 2217,
         "sex": "male",
-    }
+    },
+    "exist_user": {
+        "email": "exist@example.com",
+        "password": "1234",
+        "name": "있던학생",
+        "stdNo": 2116,
+        "sex": "male",
+    },
 }
+
+
+def test_get_user_by_token(client: TestClient, token_headers: Dict[str, str]) -> None:
+    response = client.get(f"{BASE_URL}/user", headers=token_headers)
+
+    exist_user_data = MOCK_USERS["exist_user"]
+    del exist_user_data["password"]
+
+    assert response.json() == MOCK_USERS["exist_user"]
 
 
 def test_create_user(client: TestClient) -> None:
