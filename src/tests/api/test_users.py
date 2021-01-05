@@ -54,3 +54,9 @@ def test_modify_user(client: TestClient, token_headers: Dict[str, str]) -> None:
     response = client.put(f"{BASE_URL}/user", headers=token_headers, json=data)
 
     assert response.status_code == 200
+
+
+def test_delete_user(client: TestClient, token_headers: Dict[str, str]) -> None:
+    response = client.delete(f"{BASE_URL}/user", headers=token_headers)
+
+    assert response.status_code == 204
