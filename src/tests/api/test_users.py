@@ -44,8 +44,8 @@ def test_create_user(client: TestClient) -> None:
 
 def test_login_user(client: TestClient) -> None:
     data = {
-        "email": MOCK_USERS["correct_user"]["email"],
-        "password": MOCK_USERS["correct_user"]["password"],
+        "email": MOCK_USERS["exist_user"]["email"],
+        "password": MOCK_USERS["exist_user"]["password"],
     }
     response = client.post(f"{BASE_URL}/user/register", json=data)
 
