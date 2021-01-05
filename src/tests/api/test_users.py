@@ -19,12 +19,6 @@ MOCK_USERS = {
 }
 
 
-@pytest.fixture()
-def token_headers() -> dict:
-    # 나중에 헤더 얻는 코드 작성
-    return {"Authorization": "asdasf.agagd.gsgdsg"}
-
-
 def test_create_user(client: TestClient) -> None:
     data = MOCK_USERS["correct_user"]
     response = client.post(f"{BASE_URL}/user/register", json=data)
@@ -40,7 +34,7 @@ def test_login_user(client: TestClient) -> None:
     response = client.post(f"{BASE_URL}/user/register", json=data)
 
     assert 200 == response.status_code
-    token_regular = re.compile(".[.].[.].")
+    token_regular = re.compile(".[.].[.]")
     assert token_regular.match(response.json()["token"])
 
 
