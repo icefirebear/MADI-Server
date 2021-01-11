@@ -6,7 +6,7 @@ from fastapi.testclient import TestClient
 from sqlalchemy.orm import Session
 
 
-BASE_URL = "http://localhost:8000"
+BASE_URL = "http://localhost:5000"
 
 MOCK_USERS = {
     "new_user": {
@@ -26,10 +26,11 @@ MOCK_USERS = {
 }
 
 
+
 def test_get_user_by_token(client: TestClient, token_headers: Dict[str, str]) -> None:
     response = client.get(f"{BASE_URL}/user", headers=token_headers)
 
-    exist_user_data = MOCK_USERS["exist_user"]
+    exist_user_data = MOCK_USERS["exist_user"].copy()
     del exist_user_data["password"]
 
     assert response.json() == MOCK_USERS["exist_user"]
@@ -66,10 +67,10 @@ def test_existing_email_check(client: TestClient) -> None:
 def test_login_user(client: TestClient) -> None:
     data = {
         "email": MOCK_USERS["exist_user"]["email"],
-        "password": MOCK_USERS["exist_user"]["password"],
+        "password": MOCK_USERS["exist_user"]["password"]
     }
-    response = client.post(f"{BASE_URL}/user/register", json=data)
-
+    response = client.post(f"{BASE_URL}/login/", json=data)
+    print(response.json())
     assert 200 == response.status_code
     token_regular = re.compile(".[.].[.]")
     assert token_regular.match(response.json()["token"])
