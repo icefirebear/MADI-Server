@@ -4,7 +4,7 @@ from datetime import datetime
 from pytz import timezone
 
 from .base import Base
-from schema.user import Gender, DEFAULT_PROFILE_IMAGE
+from app.schema.user import Gender, DEFAULT_PROFILE_IMAGE
 
 
 class User(Base):
