@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 from app.core.config import settings
 from app.schema.user import UserLogin, Token
 from app.api import dependencies
-from app.core.authentication import JWTAuthentication
+from app.core.security import obtain_token
 from app import crud
 
 router = APIRouter()
@@ -28,7 +28,7 @@ def login_by_general(
     access_token_expires = timedelta(minute=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
 
     return {
-        "token": JWTAuthentication.obtain_token(
+        "token": obtain_token(
             user.email, expires_delta=access_token_expires
         )
     }
