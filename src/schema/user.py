@@ -31,6 +31,11 @@ class UserCreate(UserBase):
     profile_image: Optional[HttpUrl] = DEFAULT_PROFILE_IMAGE
 
 
+class UserLogin(UserBase):
+    email: EmailStr
+    password: str
+
+
 # API에서 User 수정시 받을 정보
 class UserPasswordUpdate(UserBase):
     password: Optional[str]
