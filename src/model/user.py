@@ -1,6 +1,7 @@
 from sqlalchemy import Table, Column, Integer, String, DateTime, Text, Boolean, Enum
 from sqlalchemy.orm import relationship
 from datetime import datetime
+from pytz import timezone
 
 from .base import Base
 from schema.user import Gender, DEFAULT_PROFILE_IMAGE
