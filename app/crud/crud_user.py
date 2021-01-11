@@ -46,8 +46,7 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
             update_data["hashed_password"] = hashed_password
         return super().update(db, db_obj=db_obj, obj_in=update_data)
 
-    def remove(self, db: Session, *, token: Optional[str]) -> Any:
-        obj = dependencies.get_current_user(db, token)
+    def remove(self, db: Session, *, obj: User) -> Any:
         db.delete(obj)
         db.commit()
         return obj
