@@ -7,9 +7,11 @@ from app.core.authentication import (
     get_password_hash,
     verify_password,
 )
+import uuid
 from app.crud.base import CRUDBase
 from app.model.user import User
 from app.schema.user import UserCreate, UserUpdate
+from app.api import dependencies
 
 
 class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
@@ -18,10 +20,13 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
 
     def create(self, db: Session, *, obj_in: UserCreate) -> User:
         db_obj = User(
+            uuid=uuid.uuid4(),
             email=obj_in.email,
-            hashed_password=get_password_hash(obj_in.password),
-            full_name=obj_in.full_name,
-            is_superuser=obj_in.is_superuser,
+            password=get_password_hash(obj_in.password),
+            std_no=obj_in.std_no,
+            name=obj_in.name,
+            gender=obj_in.gender,
+            profile_image=obj_in.profile_image,
         )
         db.add(db_obj)
         db.commit()
@@ -41,11 +46,16 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
             update_data["hashed_password"] = hashed_password
         return super().update(db, db_obj=db_obj, obj_in=update_data)
 
+    def remove(self, db: Session, *, obj: User) -> Any:
+        db.delete(obj)
+        db.commit()
+        return obj
+
     def authenticate(self, db: Session, *, email: str, password: str) -> Optional[User]:
         user = self.get_by_email(db, email=email)
         if not user:
             return None
-        if not verify_password(password, user.hashed_password):
+        if not verify_password(password, user.password):
             return None
         return user
 
