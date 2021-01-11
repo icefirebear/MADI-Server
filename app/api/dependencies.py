@@ -10,9 +10,7 @@ from app import crud, model, schema
 from app.core.config import settings
 import fastapi_sqlalchemy
 
-reusable_oauth2 = OAuth2PasswordBearer(
-    tokenUrl=f"{settings.API_V1_STR}/login/access-token"
-)
+reusable_oauth2 = OAuth2PasswordBearer(tokenUrl="login")
 
 
 def get_db() -> Generator:
