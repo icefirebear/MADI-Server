@@ -5,7 +5,7 @@ from pytz import timezone
 
 from .base import Base
 
-from schema.authority import Authority as AuthEnum
+from app.schema.authority import Authority as AuthEnum
 
 
 class Authority(Base):

@@ -12,6 +12,10 @@ class Gender(Enum):
     none = 3
 
 
+class Token(BaseModel):
+    token: str
+
+
 # User의 공유 속성
 class UserBase(BaseModel):
     email: Optional[EmailStr] = None
@@ -29,6 +33,11 @@ class UserCreate(UserBase):
     name: str
     gender: Gender
     profile_image: Optional[HttpUrl] = DEFAULT_PROFILE_IMAGE
+
+
+class UserLogin(UserBase):
+    email: EmailStr
+    password: str
 
 
 # API에서 User 수정시 받을 정보
