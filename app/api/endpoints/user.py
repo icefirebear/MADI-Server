@@ -17,9 +17,12 @@ router = APIRouter()
 # 유저 정보 가져오기 - Token
 @router.get("/", response_model=schema.User)
 def get_user_info(
-    db: Session = Depends(dependencies.get_db), user_agent: Optional[str] = Header(None)
+    db: Session = Depends(dependencies.get_db),
+    Authorization: Optional[str] = Header(None),
 ) -> Any:
-    return
+    header_jwt = Authorization.split()
+    user = dependencies.get_current_user(db, token=header_jwt[1])
+    return user
 
 
 # 유저 회원가입
