@@ -13,15 +13,15 @@ MOCK_USERS = {
         "email": "student1@example.com",
         "password": "1234",
         "name": "학생1",
-        "stdNo": 2217,
-        "sex": "male",
+        "std_no": "2217",
+        "gender": "1",
     },
     "exist_user": {
         "email": "exist@example.com",
         "password": "1234",
         "name": "있던학생",
-        "stdNo": 2116,
-        "sex": "male",
+        "std_no": "2116",
+        "gender": "1",
     },
 }
 
@@ -69,7 +69,6 @@ def test_login_user(client: TestClient) -> None:
         "password": MOCK_USERS["exist_user"]["password"],
     }
     response = client.post(f"{BASE_URL}/login/", json=data)
-    print(response.json())
     assert 200 == response.status_code
     token_regular = re.compile(".[.].[.]")
     assert token_regular.match(response.json()["token"])
