@@ -7,8 +7,8 @@ from app.schema.client_app import ClientAppCreate, ClientAppUpdate
 
 
 class CRUDClientApp(CRUDBase[ClientApp, ClientAppCreate, ClientAppUpdate]):
-    def get_multi(self, db: Session, *, id):
-        return db.query(self.model).filter(self.model.owner_uuid == id).all()
+    def get_multi(self, db: Session, *, owner_uuid):
+        return db.query(self.model).filter(self.model.owner_uuid == owner_uuid).all()
 
 
 client_app = CRUDClientApp(ClientApp)

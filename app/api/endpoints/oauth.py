@@ -44,7 +44,7 @@ async def get_app_info(
     db: Session = Depends(dependencies.get_db),
     current_user: model.User = Depends(dependencies.get_current_user),
 ):
-    return
+    return crud.client_app.get(app_id)
 
 
 # OAuth 클라이언트 생성 - Token
@@ -54,7 +54,8 @@ async def create_app(
     db: Session = Depends(dependencies.get_db),
     current_user: model.User = Depends(dependencies.get_current_user),
 ):
-    return
+    user_in.owner_uuid = current_user.uuid
+    return crud.client_app.create(db, user_in)
 
 
 @router.put("/{app_id}")
@@ -64,7 +65,12 @@ async def update_app(
     db: Session = Depends(dependencies.get_db),
     current_user: model.User = Depends(dependencies.get_current_user),
 ):
-    return
+    app = crud.client_app.get(user_in.id)
+    if app.owner_uuid != current_user.uuid:
+        raise HTTPException(status_code=403, detail="Forbidden")
+
+    user_in.id = app_id
+    return crud.client_app.update(user_in)
 
 
 # OAuth 클라이언트 삭제
@@ -74,4 +80,8 @@ async def delete_app(
     db: Session = Depends(dependencies.get_db),
     current_user: model.User = Depends(dependencies.get_current_user),
 ):
-    return
+    app = crud.client_app.get(user_in.id)
+    if app.owner_uuid != current_user.uuid:
+        raise HTTPException(status_code=403, detail="Forbidden")
+
+    return crud.client_app.remove(app_id, current_user.uuid)
