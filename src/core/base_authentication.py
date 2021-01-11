@@ -1,11 +1,14 @@
 from datetime import timedelta
 from typing import Optional, Tuple
 from model.user import User
+from fastapi_sqlalchemy import db
+
 
 class BaseAuthentication():
 
-    def authenticate(self, email, password) -> Tuple[User,str]:
+    def obtain_token(self, data: dict, expires_delta: Optional[timedelta] = None):
         """
-        email과 password의 유효성 검사와 login 처리 (토큰 발급)
-        Returns: (User , token)
+        그냥 jwt로 변환만 해줌 (토큰 발급)
+        Returns: token
         """
+        return
