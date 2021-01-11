@@ -12,10 +12,6 @@ class Gender(Enum):
     none = 3
 
 
-class Token(BaseModel):
-    token: str
-
-
 # User의 공유 속성
 class UserBase(BaseModel):
     email: Optional[EmailStr] = None
