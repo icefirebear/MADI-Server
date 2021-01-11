@@ -12,7 +12,7 @@ def main():
     except Exception as e:
         PORT: int = 5000
 
-    uvicorn.run("app/main:app", port=PORT, reload=True)
+    uvicorn.run("app.main:app", port=PORT, reload=True)
 
 
 if __name__ == "__main__":

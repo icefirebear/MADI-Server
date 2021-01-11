@@ -1,7 +1,5 @@
 from datetime import timedelta
 from typing import Optional, Tuple
-from model.user import User
-from fastapi_sqlalchemy import db
 
 
 class BaseAuthentication():

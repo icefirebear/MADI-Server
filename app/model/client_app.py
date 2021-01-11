@@ -11,7 +11,7 @@ from sqlalchemy import (
 )
 from sqlalchemy.orm import relationship
 from .base import Base
-from schema.client_app import DEFAULT_APP_IMAGE
+from app.schema.client_app import DEFAULT_APP_IMAGE
 
 
 class ClientApp(Base):

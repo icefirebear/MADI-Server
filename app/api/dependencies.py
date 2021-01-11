@@ -6,8 +6,8 @@ from jose import jwt
 from pydantic import ValidationError
 from sqlalchemy.orm import Session
 
-import crud, model, schema
-from core.config import settings
+from app import crud, model, schema
+from app.core.config import settings
 import fastapi_sqlalchemy
 reusable_oauth2 = OAuth2PasswordBearer(
     tokenUrl=f"{settings.API_V1_STR}/login/access-token"
