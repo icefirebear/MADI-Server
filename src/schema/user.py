@@ -38,7 +38,10 @@ class UserPasswordUpdate(UserBase):
 
 # API에서 User 수정시 받을 정보
 class UserUpdate(UserCreate):
-    pass
+    name: str
+    std_no: str
+    gender: Gender
+    profile_image: Optional[HttpUrl] = DEFAULT_PROFILE_IMAGE
 
 
 class UserInDBBase(UserBase):
