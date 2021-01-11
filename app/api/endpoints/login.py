@@ -17,7 +17,6 @@ router = APIRouter()
 def login_by_general(
     db: Session = Depends(dependencies.get_db), form_data: UserLogin = Body(...)
 ) -> Any:
-    print(form_data)
     user = crud.user.authenticate(
         db, email=form_data.email, password=form_data.password
     )
