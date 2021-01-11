@@ -1,4 +1,4 @@
-from jose import jwt
+import jwt
 
 from datetime import datetime, timedelta
 from typing import Optional, Tuple, Union, Any
@@ -24,7 +24,5 @@ def obtain_token(payload: dict, expires_delta: Optional[timedelta] = None) -> st
     else:
         expire = datetime.utcnow() + timedelta(minutes=15)
     payload["exp"] = expire
-    encoded_jwt = jwt.encode(
-        payload, settings.SECRET_KEY, algorithm=settings.ALGORITHM
-    )
+    encoded_jwt = jwt.encode(payload, settings.SECRET_KEY, algorithm=settings.ALGORITHM)
     return encoded_jwt
