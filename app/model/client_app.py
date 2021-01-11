@@ -13,7 +13,7 @@ from sqlalchemy.orm import relationship
 from datetime import datetime
 
 from .base import Base
-from schema.client_app import DEFAULT_APP_IMAGE
+from app.schema.client_app import DEFAULT_APP_IMAGE
 
 
 class ClientApp(Base):

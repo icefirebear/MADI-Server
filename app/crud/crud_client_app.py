@@ -1,6 +1,8 @@
-from crud.base import CRUDBase
-from model.cilent_app import ClientApp
-from schema.client_app import ClientAppCreate, ClientAppUpdate
+from sqlalchemy.orm import Session
+
+from .base import CRUDBase
+from app.model.client_app import ClientApp
+from app.schema.client_app import ClientAppCreate, ClientAppUpdate
 
 
 class CRUDClientApp(CRUDBase[ClientApp, ClientAppCreate, ClientAppUpdate]):
