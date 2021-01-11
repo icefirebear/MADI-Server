@@ -1,12 +1,16 @@
 import secrets
 from typing import Any, Dict, List, Optional, Union
+from configparser import ConfigParser
 
 from pydantic import AnyHttpUrl, BaseSettings, EmailStr, HttpUrl, PostgresDsn, validator
+
+config = ConfigParser()
+config.read("config.ini")
 
 
 class Settings(BaseSettings):
     API_V1_STR: str = "/api/v1"
-    SECRET_KEY = secrets.token_urlsafe(32)
+    SECRET_KEY: str = config.get("default", "JWT_SECRET_KEY") or secrets.token_urlsafe(32)
     ALGORITHM = "HS256"
     # 60 minutes * 24 hours * 8 days = 8 days
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 8
