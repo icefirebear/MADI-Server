@@ -11,6 +11,7 @@ import uuid
 from app.crud.base import CRUDBase
 from app.model.user import User
 from app.schema.user import UserCreate, UserUpdate
+from app.api import dependencies
 
 
 class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
@@ -44,6 +45,12 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
             del update_data["password"]
             update_data["hashed_password"] = hashed_password
         return super().update(db, db_obj=db_obj, obj_in=update_data)
+
+    def remove(self, db: Session, *, token: Optional[str]) -> Any:
+        obj = dependencies.get_current_user(db, token)
+        db.delete(obj)
+        db.commit()
+        return obj
 
     def authenticate(self, db: Session, *, email: str, password: str) -> Optional[User]:
         user = self.get_by_email(db, email=email)
