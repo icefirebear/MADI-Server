@@ -1,5 +1,6 @@
 from typing import Optional
 from enum import Enum
+from datetime import datetime
 
 from pydantic import BaseModel, EmailStr, HttpUrl
 
@@ -9,6 +10,7 @@ class Token(BaseModel):
 
 
 class TokenPayload(BaseModel):
-    email: str
+    exp: datetime
+    sub: str
     std_no: str
     name: str
