@@ -23,6 +23,7 @@ class CRUDClientApp(CRUDBase[ClientApp, ClientAppCreate, ClientAppUpdate]):
             )
 
         obj_in.id = random_id
+        obj_in.secret_key = random.choices(string.ascii_letters + string.digits, k=20)
         app = super().create(db, obj_in)
         crud.authority.create_multi(app.id, obj_in.authority)
 
