@@ -26,7 +26,6 @@ MOCK_USERS = {
 }
 
 
-
 def test_get_user_by_token(client: TestClient, token_headers: Dict[str, str]) -> None:
     response = client.get(f"{BASE_URL}/user", headers=token_headers)
 
@@ -67,7 +66,7 @@ def test_existing_email_check(client: TestClient) -> None:
 def test_login_user(client: TestClient) -> None:
     data = {
         "email": MOCK_USERS["exist_user"]["email"],
-        "password": MOCK_USERS["exist_user"]["password"]
+        "password": MOCK_USERS["exist_user"]["password"],
     }
     response = client.post(f"{BASE_URL}/login/", json=data)
     print(response.json())

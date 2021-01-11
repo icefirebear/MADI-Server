@@ -16,4 +16,5 @@ app.add_middleware(DBSession, db_url=config.get("default", "DB_URL"))
 async def test():
     return {"message": "Hello FastAPI"}
 
+
 app.include_router(api_router)

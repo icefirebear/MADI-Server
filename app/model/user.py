@@ -6,7 +6,6 @@ from pytz import timezone
 from .base import Base
 from app.schema.user import Gender, DEFAULT_PROFILE_IMAGE
 
-
 class User(Base):
     uuid = Column(String(36), primary_key=True)
     email = Column(String(255), nullable=False)

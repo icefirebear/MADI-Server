@@ -24,4 +24,4 @@ class ClientApp(Base):
     redirect_uri = Column(String(45), nullable=False)
 
     owner = relationship("User", back_populates="client_apps")
-    authorities = relationship("Authority", back_populates="app")
+    authorities = relationship("Authority", back_populates="app",primaryjoin='Authority.authority == ClientApp.uuid')

@@ -19,7 +19,6 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
 
 
 class JWTAuthentication(BaseAuthentication):
-
     def obtain_token(self, data: dict, expires_delta: Optional[timedelta] = None):
         to_encode = data.copy()
         if expires_delta:
@@ -27,5 +26,7 @@ class JWTAuthentication(BaseAuthentication):
         else:
             expire = datetime.utcnow() + timedelta(minutes=15)
         to_encode.update({"exp": expire})
-        encoded_jwt = jwt.encode(to_encode, settings.SECRET_KEY, algorithm=settings.ALGORITHM)
+        encoded_jwt = jwt.encode(
+            to_encode, settings.SECRET_KEY, algorithm=settings.ALGORITHM
+        )
         return encoded_jwt
