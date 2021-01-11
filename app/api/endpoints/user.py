@@ -57,9 +57,9 @@ def check_user_email(
 @router.put("/", response_model=schema.User)
 def update_user_info(
     db: Session = Depends(dependencies.get_db),
+    Authorization: Optional[str] = Header(None),
     *,
-    user_in: schema.UserUpdate,
-    Authorization: Optional[str] = Header(None)
+    user_in: schema.UserUpdate
 ) -> Any:
     header_jwt = Authorization.split()
     user_obj = dependencies.get_current_user(db, token=header_jwt[1])
@@ -69,5 +69,11 @@ def update_user_info(
 
 # 유저 탈퇴 - Token
 @router.delete("/")
-def delete_user_account() -> Any:
-    return
+def delete_user_account(
+    db: Session = Depends(dependencies.get_db),
+    Authorization: Optional[str] = Header(None),
+) -> Any:
+    header_jwt = Authorization.split()
+    user_obj = dependencies.get_current_user(db, token=header_jwt[1])
+    user = crud.user.remove(db, user_obj)
+    return Response(status_code=204)
