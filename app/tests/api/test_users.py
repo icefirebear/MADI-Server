@@ -13,15 +13,15 @@ MOCK_USERS = {
         "email": "student1@example.com",
         "password": "1234",
         "name": "학생1",
-        "stdNo": 2217,
-        "sex": "male",
+        "std_no": "2217",
+        "gender": "1",
     },
     "exist_user": {
         "email": "exist@example.com",
         "password": "1234",
         "name": "있던학생",
-        "stdNo": 2116,
-        "sex": "male",
+        "std_no": "2116",
+        "gender": "1",
     },
 }
 
