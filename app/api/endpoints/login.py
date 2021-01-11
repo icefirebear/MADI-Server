@@ -27,11 +27,7 @@ def login_by_general(
         raise HTTPException(status_code=400, detail="Inactive user")
     access_token_expires = timedelta(minute=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
 
-    return {
-        "token": obtain_token(
-            user.email, expires_delta=access_token_expires
-        )
-    }
+    return {"token": obtain_token(user.email, expires_delta=access_token_expires)}
 
 
 # access-token 으로 로그인
