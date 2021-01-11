@@ -7,6 +7,7 @@ from app.core.authentication import (
     get_password_hash,
     verify_password,
 )
+import uuid
 from app.crud.base import CRUDBase
 from app.model.user import User
 from app.schema.user import UserCreate, UserUpdate
@@ -18,6 +19,7 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
 
     def create(self, db: Session, *, obj_in: UserCreate) -> User:
         db_obj = User(
+            uuid=uuid.uuid4(),
             email=obj_in.email,
             password=get_password_hash(obj_in.password),
             std_no=obj_in.std_no,
