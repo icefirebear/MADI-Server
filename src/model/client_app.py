@@ -10,9 +10,6 @@ from sqlalchemy import (
     ForeignKey,
 )
 from sqlalchemy.orm import relationship
-from datetime import datetime
-from pytz import timezone
-
 from .base import Base
 from schema.client_app import DEFAULT_APP_IMAGE
 
