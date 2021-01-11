@@ -1,6 +1,6 @@
 from datetime import timedelta
 from typing import Any
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Body
 from sqlalchemy.orm import Session
 
 from app.core.config import settings
@@ -15,8 +15,9 @@ router = APIRouter()
 # 기본정보로 로그인
 @router.post("/", response_model=Token)
 def login_by_general(
-    db: Session = Depends(dependencies.get_db), form_data: UserLogin = Depends()
+    db: Session = Depends(dependencies.get_db), form_data: UserLogin = Body(...)
 ) -> Any:
+    print(form_data)
     user = crud.user.authenticate(
         db, email=form_data.email, password=form_data.password
     )
