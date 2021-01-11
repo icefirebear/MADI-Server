@@ -54,9 +54,17 @@ def check_user_email(
 
 
 # 유저 정보 수정 - Token
-@router.put("/")
-def update_user_info() -> Any:
-    return
+@router.put("/", response_model=schema.User)
+def update_user_info(
+    db: Session = Depends(dependencies.get_db),
+    *,
+    user_in: schema.UserUpdate,
+    Authorization: Optional[str] = Header(None)
+) -> Any:
+    header_jwt = Authorization.split()
+    user_obj = dependencies.get_current_user(db, token=header_jwt[1])
+    user = crud.user.update(db, user_obj, user_in)
+    return user
 
 
 # 유저 탈퇴 - Token
