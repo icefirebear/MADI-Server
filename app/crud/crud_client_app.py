@@ -32,7 +32,12 @@ class CRUDClientApp(CRUDBase[ClientApp, ClientAppCreate, ClientAppUpdate]):
         return app
 
     def get_multi(self, db: Session, *, owner_uuid):
-        return db.query(self.model).filter(self.model.owner_uuid == owner_uuid).all()
+        app_ids = (
+            db.query(self.model.app_id)
+            .filter(self.model.owner_uuid == owner_uuid)
+            .all()
+        )
+        return [self.get(db, app_id=app_id) for app_id in app_ids]
 
     def create(self, db: Session, *, obj_in: ClientAppCreate):
         random_id = "".join(random.choices(string.ascii_letters + string.digits, k=9))
@@ -66,6 +71,17 @@ class CRUDClientApp(CRUDBase[ClientApp, ClientAppCreate, ClientAppUpdate]):
         )
 
         return obj_in
+
+    def update(self, db: Session, *, db_obj: ClientApp, obj_in: ClientAppUpdate):
+        super().update(db, db_obj=db_obj, obj_in=obj_in)
+        crud.authority.update_multi(
+            db, app_id=db_obj.app_id, authorities=obj_in.authority
+        )
+        crud.approved_domain.update_multi(
+            db, app_id=db_obj.app_id, domains=obj_in.approved_domain
+        )
+
+        return self.get(db, app_id=db_obj.app_id)
 
 
 client_app = CRUDClientApp(ClientApp)

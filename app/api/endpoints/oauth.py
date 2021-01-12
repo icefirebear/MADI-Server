@@ -34,7 +34,7 @@ async def get_app_list(
     db: Session = Depends(dependencies.get_db),
     current_user: model.User = Depends(dependencies.get_current_user),
 ) -> Any:
-    my_apps = crud.client_app.get_multi(db)
+    my_apps = crud.client_app.get_multi(db, owner_uuid=current_user.uuid)
     return my_apps
 
 
@@ -68,12 +68,12 @@ async def update_app(
     db: Session = Depends(dependencies.get_db),
     current_user: model.User = Depends(dependencies.get_current_user),
 ):
-    app = crud.client_app.get(user_in.id)
+    app = crud.client_app.get(db, app_id=app_id)
     if app.owner_uuid != current_user.uuid:
         raise HTTPException(status_code=403, detail="Forbidden")
 
-    user_in.id = app_id
-    return crud.client_app.update(user_in)
+    user_in.app_id = app_id
+    return crud.client_app.update(db, db_obj=app, obj_in=user_in)
 
 
 # OAuth 클라이언트 삭제
