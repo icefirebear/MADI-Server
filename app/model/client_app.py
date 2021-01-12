@@ -29,4 +29,4 @@ class ClientApp(Base):
 
     owner = relationship("User", back_populates="client_apps")
     authorities = relationship("Authority", back_populates="app")
-    approved_domain = relationship("ApprovedDomain", back_populates="app")
+    approved_domains = relationship("ApprovedDomain", back_populates="app")

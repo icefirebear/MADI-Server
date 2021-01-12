@@ -11,4 +11,4 @@ class ApprovedDomain(Base):
         String(9), ForeignKey("clientapp.app_id", ondelete="CASCADE"), primary_key=True
     )
 
-    app = relationship("ClientApp", back_populates="approved_domain")
+    app = relationship("ClientApp", back_populates="approved_domains")

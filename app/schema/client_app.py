@@ -34,6 +34,10 @@ class ClientAppUpdate(ClientAppCreate):
 
 
 class ClientAppInDBBase(ClientAppBase):
+    image: str
+    redirect_uri: str
+    approved_domain: str
+
     class Config:
         orm_mode = True
 
