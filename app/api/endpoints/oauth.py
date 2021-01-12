@@ -55,7 +55,7 @@ async def create_app(
     current_user: model.User = Depends(dependencies.get_current_user),
 ):
     user_in.owner_uuid = current_user.uuid
-    return crud.client_app.create(db, user_in)
+    return crud.client_app.create(db, obj_in=user_in)
 
 
 @router.put("/{app_id}")
