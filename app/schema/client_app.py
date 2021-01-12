@@ -10,8 +10,8 @@ DEFAULT_APP_IMAGE = ""
 
 class ClientAppBase(BaseModel):
     owner_uuid: Optional[str] = None
-    id: Optional[str] = None
-    secret_id: Optional[str] = None
+    app_id: Optional[str] = None
+    secret_key: Optional[str] = None
     name: Optional[str] = None
     image: Optional[HttpUrl] = None
     redirect_uri: Optional[HttpUrl] = None
@@ -34,7 +34,9 @@ class ClientAppUpdate(ClientAppCreate):
 
 
 class ClientAppInDBBase(ClientAppBase):
-    uuid: Optional[str]
+    image: str
+    redirect_uri: str
+    approved_domain: str
 
     class Config:
         orm_mode = True
