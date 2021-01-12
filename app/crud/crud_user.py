@@ -48,7 +48,7 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
                 del update_data["password"]
                 update_data["hashed_password"] = hashed_password
         except KeyError:
-            return super().update(db, db_obj=db_obj, obj_in=update_data)
+            pass
         return super().update(db, db_obj=db_obj, obj_in=update_data)
 
     def remove(self, db: Session, *, obj: User) -> Any:
