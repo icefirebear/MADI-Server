@@ -69,7 +69,7 @@ def update_user_info(
 @router.delete("/")
 def delete_user_account(
     db: Session = Depends(dependencies.get_db),
-    Authorization: Optional[str] = Header(None),
+    current_user: model.User = Depends(dependencies.get_current_user),
 ) -> Any:
     header_jwt = Authorization.split()
     user_obj = dependencies.get_current_user(db, token=header_jwt[1])
