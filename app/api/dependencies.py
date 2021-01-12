@@ -10,14 +10,14 @@ from sqlalchemy.orm import Session
 
 from app import crud, model, schema
 from app.core.config import settings
-import fastapi_sqlalchemy
+from app.db.session import LocalSession
 
 reusable_oauth2 = OAuth2PasswordBearer(tokenUrl="login")
 
 
 def get_db() -> Generator:
     try:
-        db = fastapi_sqlalchemy.db.session
+        db = LocalSession()
         yield db
     finally:
         db.close()
