@@ -12,7 +12,7 @@ from app.model.user import User
 from app.schema.user import UserCreate, UserUpdate
 from app.api import dependencies
 
-DEFAULT_IMAGE_URL = ""
+DEFAULT_IMAGE_URL = "https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png"
 
 
 class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
@@ -27,7 +27,7 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
             std_no=obj_in.std_no,
             name=obj_in.name,
             gender=obj_in.gender,
-            profile_image=obj_in.profile_image,
+            profile_image=obj_in.profile_image or DEFAULT_IMAGE_URL,
         )
         db.add(db_obj)
         db.commit()
@@ -38,7 +38,7 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
         self, db: Session, *, db_obj: User, obj_in: Union[UserUpdate, Dict[str, Any]]
     ) -> User:
         if isinstance(obj_in, dict):
-            obj_in.profile_image = obj_in.profile_image
+            obj_in.profile_image = obj_in.profile_image or DEFAULT_IMAGE_URL
             update_data = obj_in
         else:
             update_data = obj_in.dict(exclude_unset=True)
