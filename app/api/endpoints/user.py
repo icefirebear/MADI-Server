@@ -55,7 +55,7 @@ def check_user_email(
 @router.put("/", response_model=schema.User)
 def update_user_info(
     db: Session = Depends(dependencies.get_db),
-    Authorization: Optional[str] = Header(None),
+    current_user: model.User = Depends(dependencies.get_current_user),
     *,
     user_in: schema.UserUpdate
 ) -> Any:
