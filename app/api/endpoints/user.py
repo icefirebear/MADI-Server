@@ -9,7 +9,7 @@ from pydantic import EmailStr
 from app.api import dependencies
 from app.core.config import Settings
 from app.schema import user as schema
-from app import crud
+from app import crud, model
 
 router = APIRouter()
 
