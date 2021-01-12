@@ -60,7 +60,7 @@ def update_user_info(
     *,
     user_in: schema.UserUpdate
 ) -> Any:
-    user = crud.user.update(db, current_user, user_in)
+    user = crud.user.update(db, db_obj=current_user, obj_in=user_in)
     return user
 
 
@@ -70,5 +70,5 @@ def delete_user_account(
     db: Session = Depends(dependencies.get_db),
     current_user: User = Depends(dependencies.get_current_user),
 ) -> Any:
-    user = crud.user.remove(db, current_user)
+    user = crud.user.remove(db, obj=current_user)
     return Response(status_code=204)
