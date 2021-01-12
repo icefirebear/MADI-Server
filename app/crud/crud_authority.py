@@ -21,7 +21,7 @@ class CRUDAuthority(CRUDBase[Authority, BaseModel, BaseModel]):
         self.delete(db, app_id=app_id)
         self.create_multi(db, app_id=app_id, authorities=authorities)
 
-    def delete(self, db: Session, *, app_id):
+    def remove(self, db: Session, *, app_id: str):
         authorities = db.query(self.model).filter(self.model.app_id == app_id).all()
 
         for authority in authorities:

@@ -17,7 +17,7 @@ class CRUDApprovedDomain(CRUDBase[ApprovedDomain, BaseModel, BaseModel]):
         self.delete(db, app_id=app_id)
         self.create_multi(db, app_id=app_id, domains=domains)
 
-    def delete(self, db: Session, *, app_id):
+    def remove(self, db: Session, *, app_id: str):
         domains = db.query(self.model).filter(self.model.app_id == app_id).all()
 
         for domain in domains:
