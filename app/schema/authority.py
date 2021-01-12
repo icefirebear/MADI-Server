@@ -5,6 +5,7 @@ from pydantic import BaseModel, HttpUrl
 
 
 class Authority(Enum):
+    email = "email"
     name = "name"
     gender = "gender"
     std_no = "std_no"
