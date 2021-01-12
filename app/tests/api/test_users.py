@@ -69,7 +69,6 @@ def test_login_user(client: TestClient) -> None:
         "password": MOCK_USERS["exist_user"]["password"],
     }
     response = client.post(f"{BASE_URL}/login/", json=data)
-    print(response.json())
     assert 200 == response.status_code
     token_regular = re.compile(".[.].[.]")
     assert token_regular.match(response.json()["token"])

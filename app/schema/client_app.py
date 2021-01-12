@@ -9,7 +9,7 @@ DEFAULT_APP_IMAGE = ""
 
 
 class ClientAppBase(BaseModel):
-    user: Optional[UserBase] = None
+    owner_uuid: Optional[str] = None
     id: Optional[str] = None
     secret_id: Optional[str] = None
     name: Optional[str] = None
