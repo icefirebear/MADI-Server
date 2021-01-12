@@ -20,9 +20,7 @@ def get_user_info(
     db: Session = Depends(dependencies.get_db),
     current_user: model.User = Depends(dependencies.get_current_user),
 ) -> Any:
-    header_jwt = Authorization.split()
-    user = dependencies.get_current_user(db, token=header_jwt[1])
-    return user
+    return current_user
 
 
 # 유저 회원가입
