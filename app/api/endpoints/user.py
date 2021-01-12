@@ -59,9 +59,7 @@ def update_user_info(
     *,
     user_in: schema.UserUpdate
 ) -> Any:
-    header_jwt = Authorization.split()
-    user_obj = dependencies.get_current_user(db, token=header_jwt[1])
-    user = crud.user.update(db, user_obj, user_in)
+    user = crud.user.update(db, current_user, user_in)
     return user
 
 
