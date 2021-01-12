@@ -18,7 +18,7 @@ router = APIRouter()
 @router.get("/", response_model=schema.User)
 def get_user_info(
     db: Session = Depends(dependencies.get_db),
-    Authorization: Optional[str] = Header(None),
+    current_user: model.User = Depends(dependencies.get_current_user),
 ) -> Any:
     header_jwt = Authorization.split()
     user = dependencies.get_current_user(db, token=header_jwt[1])
