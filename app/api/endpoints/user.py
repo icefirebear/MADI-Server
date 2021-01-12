@@ -9,6 +9,7 @@ from pydantic import EmailStr
 from app.api import dependencies
 from app.core.config import Settings
 from app.schema import user as schema
+from app.model import User
 from app import crud
 
 router = APIRouter()
@@ -18,7 +19,7 @@ router = APIRouter()
 @router.get("/", response_model=schema.User)
 def get_user_info(
     db: Session = Depends(dependencies.get_db),
-    current_user: model.User = Depends(dependencies.get_current_user),
+    current_user: User = Depends(dependencies.get_current_user),
 ) -> Any:
     return current_user
 
@@ -55,7 +56,7 @@ def check_user_email(
 @router.put("/", response_model=schema.User)
 def update_user_info(
     db: Session = Depends(dependencies.get_db),
-    current_user: model.User = Depends(dependencies.get_current_user),
+    current_user: User = Depends(dependencies.get_current_user),
     *,
     user_in: schema.UserUpdate
 ) -> Any:
@@ -67,7 +68,7 @@ def update_user_info(
 @router.delete("/")
 def delete_user_account(
     db: Session = Depends(dependencies.get_db),
-    current_user: model.User = Depends(dependencies.get_current_user),
+    current_user: User = Depends(dependencies.get_current_user),
 ) -> Any:
     user = crud.user.remove(db, current_user)
     return Response(status_code=204)
