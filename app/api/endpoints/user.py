@@ -69,7 +69,5 @@ def delete_user_account(
     db: Session = Depends(dependencies.get_db),
     current_user: model.User = Depends(dependencies.get_current_user),
 ) -> Any:
-    header_jwt = Authorization.split()
-    user_obj = dependencies.get_current_user(db, token=header_jwt[1])
-    user = crud.user.remove(db, user_obj)
+    user = crud.user.remove(db, current_user)
     return Response(status_code=204)
