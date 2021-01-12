@@ -8,7 +8,7 @@ from app.schema.user import UserLogin
 from app.schema.token import Token
 from app.api import dependencies
 from app.core.security import obtain_token
-from app import crud
+from app import crud, model
 
 router = APIRouter()
 
@@ -16,7 +16,7 @@ router = APIRouter()
 # 기본정보로 로그인
 @router.post("/", response_model=Token)
 def login_by_general(
-        db: Session = Depends(dependencies.get_db), form_data: UserLogin = Body(...)
+    db: Session = Depends(dependencies.get_db), form_data: UserLogin = Body(...)
 ) -> Any:
     user = crud.user.authenticate(
         db, email=form_data.email, password=form_data.password
@@ -28,7 +28,7 @@ def login_by_general(
         "sub": user.email,
         "std_no": user.std_no,
         "name": user.name,
-        "gender": user.gender.value
+        "gender": user.gender.value,
     }
 
     return {"token": obtain_token(payload=payload, expires_delta=access_token_expires)}
