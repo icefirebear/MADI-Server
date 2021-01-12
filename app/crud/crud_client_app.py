@@ -83,5 +83,13 @@ class CRUDClientApp(CRUDBase[ClientApp, ClientAppCreate, ClientAppUpdate]):
 
         return self.get(db, app_id=db_obj.app_id)
 
+    def remove(self, db: Session, *, app_id: str):
+        crud.authority.remove(db, app_id=app_id)
+        crud.approved_domain.remove(db, app_id=app_id)
+
+        app = db.query(self.model).filter(self.model.app_id == app_id).first()
+        db.delete(app)
+        db.commit()
+
 
 client_app = CRUDClientApp(ClientApp)

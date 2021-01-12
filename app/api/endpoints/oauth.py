@@ -83,8 +83,8 @@ async def delete_app(
     db: Session = Depends(dependencies.get_db),
     current_user: model.User = Depends(dependencies.get_current_user),
 ):
-    app = crud.client_app.get(user_in.id)
+    app = crud.client_app.get(db, app_id=app_id)
     if app.owner_uuid != current_user.uuid:
         raise HTTPException(status_code=403, detail="Forbidden")
 
-    return crud.client_app.remove(app_id, current_user.uuid)
+    return crud.client_app.remove(db, app_id=app_id)
