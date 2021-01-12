@@ -11,7 +11,7 @@ DEFAULT_APP_IMAGE = ""
 class ClientAppBase(BaseModel):
     owner_uuid: Optional[str] = None
     id: Optional[str] = None
-    secret_id: Optional[str] = None
+    secret_key: Optional[str] = None
     name: Optional[str] = None
     image: Optional[HttpUrl] = None
     redirect_uri: Optional[HttpUrl] = None
