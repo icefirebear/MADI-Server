@@ -43,7 +43,7 @@ class UserPasswordUpdate(UserBase):
 
 
 # API에서 User 수정시 받을 정보
-class UserUpdate(UserCreate):
+class UserUpdate(UserBase):
     name: str
     std_no: str
     gender: Gender
