@@ -12,6 +12,8 @@ from app.model.user import User
 from app.schema.user import UserCreate, UserUpdate
 from app.api import dependencies
 
+DEFAULT_IMAGE_URL = ""
+
 
 class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
     def get_by_email(self, db: Session, *, email: str) -> Optional[User]:
@@ -36,13 +38,17 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
         self, db: Session, *, db_obj: User, obj_in: Union[UserUpdate, Dict[str, Any]]
     ) -> User:
         if isinstance(obj_in, dict):
+            obj_in.profile_image = obj_in.profile_image
             update_data = obj_in
         else:
             update_data = obj_in.dict(exclude_unset=True)
-        if update_data["password"]:
-            hashed_password = get_password_hash(update_data["password"])
-            del update_data["password"]
-            update_data["hashed_password"] = hashed_password
+        try:
+            if update_data["password"]:
+                hashed_password = get_password_hash(update_data["password"])
+                del update_data["password"]
+                update_data["hashed_password"] = hashed_password
+        except KeyError:
+            return super().update(db, db_obj=db_obj, obj_in=update_data)
         return super().update(db, db_obj=db_obj, obj_in=update_data)
 
     def remove(self, db: Session, *, obj: User) -> Any:
