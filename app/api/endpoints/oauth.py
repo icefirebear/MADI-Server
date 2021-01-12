@@ -44,7 +44,10 @@ async def get_app_info(
     db: Session = Depends(dependencies.get_db),
     current_user: model.User = Depends(dependencies.get_current_user),
 ):
-    return crud.client_app.get(app_id)
+    app = crud.client_app.get(db, app_id=app_id)
+    if app.owner_uuid != current_user.uuid:
+        raise HTTPException(status_code=404, detail="Not Found")
+    return app
 
 
 # OAuth 클라이언트 생성 - Token
