@@ -16,7 +16,7 @@ router = APIRouter()
 
 # 유저 정보 가져오기 - Token
 @router.get("/", response_model=schema.User)
-def get_user_info(
+async def get_user_info(
     db: Session = Depends(dependencies.get_db),
     current_user: model.User = Depends(dependencies.get_current_user),
 ) -> Any:
@@ -25,7 +25,7 @@ def get_user_info(
 
 # 유저 회원가입
 @router.post("/register")
-def register_user(
+async def register_user(
     db: Session = Depends(dependencies.get_db), *, user_in: schema.UserCreate
 ) -> Any:
     user = crud.user.get_by_email(db, email=user_in.email)
@@ -37,7 +37,7 @@ def register_user(
 
 # 중복 이메일 체크
 @router.post("/email-check")
-def check_user_email(
+async def check_user_email(
     db: Session = Depends(dependencies.get_db), email: EmailStr = None
 ) -> Any:
 
@@ -53,7 +53,7 @@ def check_user_email(
 
 # 유저 정보 수정 - Token
 @router.put("/", response_model=schema.User)
-def update_user_info(
+async def update_user_info(
     db: Session = Depends(dependencies.get_db),
     current_user: model.User = Depends(dependencies.get_current_user),
     *,
@@ -65,7 +65,7 @@ def update_user_info(
 
 # 유저 탈퇴 - Token
 @router.delete("/")
-def delete_user_account(
+async def delete_user_account(
     db: Session = Depends(dependencies.get_db),
     current_user: model.User = Depends(dependencies.get_current_user),
 ) -> Any:
